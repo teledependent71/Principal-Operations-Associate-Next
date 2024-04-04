@@ -2,8 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 
 import { DataProvider, Repeater } from '@teleporthq/react-components'
-
-import authorsResource from '../resources/authors'
+import { getEntityByAttribute } from '@teleporthq/cms-mappers/caisy'
 
 const TestPage = (props) => {
   return (
@@ -17,14 +16,20 @@ const TestPage = (props) => {
           />
         </Head>
         <DataProvider
-          renderSuccess={(context_4w283k) => (
+          renderSuccess={(context_ltt5ha) => (
             <>
-              <h1>{context_4w283k?.Name}</h1>
+              <h1 id={context_ltt5ha?.id}>Heading</h1>
             </>
           )}
-          initialData={props.context4w283kProp}
+          params={{
+            projectId: '3bd8eb33-2aaa-4620-87bf-d7ccd04d0245',
+            query:
+              'query MyQuery{TypeWithRichText{_meta{createdAt updatedAt id}title content{json connections{__typename  }}}}',
+            attribute: 'id',
+            id: '2',
+          }}
+          initialData={props.contextLtt5haProp}
           persistDataDuringLoading={true}
-          key={props?.context4w283kProp?.id}
         />
       </div>
       <style jsx>
@@ -47,12 +52,22 @@ export default TestPage
 
 export async function getStaticProps(context) {
   try {
-    const context4w283kProp = await authorsResource({
+    const contextLtt5haProp = await getEntityByAttribute({
       ...context?.params,
+      projectId: '3bd8eb33-2aaa-4620-87bf-d7ccd04d0245',
+      query:
+        'query MyQuery{TypeWithRichText{_meta{createdAt updatedAt id}title content{json connections{__typename  }}}}',
+      attribute: 'id',
+      id: '2',
     })
+    if (!contextLtt5haProp?.data?.[0]) {
+      return {
+        notFound: true,
+      }
+    }
     return {
       props: {
-        context4w283kProp: context4w283kProp?.data?.[0],
+        contextLtt5haProp: contextLtt5haProp?.data?.[0],
       },
       revalidate: 60,
     }

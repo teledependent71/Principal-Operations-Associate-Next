@@ -15,10 +15,10 @@
     "next": "^12.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@teleporthq/cms-mappers": "latest",
     "@teleporthq/react-components": "latest",
-    "prop-types": "15.7.2",
-    "react-markdown": "8.0.7"
+    "@teleporthq/cms-mappers": "latest",
+    "@caisy/rich-text-react-renderer": "0.7.3",
+    "prop-types": "15.7.2"
   },
   "engines": {
     "node": ">=18.x"
